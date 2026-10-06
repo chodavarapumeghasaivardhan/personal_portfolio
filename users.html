@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🪸Myapp</title>
+</head>
+<body>
+
+    <center>
+        <h3>🪸Portfolio.co...</h3>
+    </center>
+    <hr>
+
+    <!-- Data Input Form -->
+    <fieldset style="width: 450px; margin: 0 auto; padding: 15px;">
+        <legend><b>Enter Data</b></legend>
+        <form method="POST">
+            
+            <label>Profile Pic URL:</label><br>
+            <input type="text" name="pic" placeholder="https://example.com" style="width: 95%;"><br><br>
+            
+            <label>Banner URL:</label><br>
+            <input type="text" name="banner" placeholder="https://example.com" style="width: 95%;"><br><br>
+
+            <label>Profile Personal URL:</label><br>
+            <input type="url" name="profile_url" placeholder="https://yourportfolio.com" style="width: 95%;"><br><br>
+            
+            <input type="text" name="uname" placeholder="Enter Username" required style="width: 95%;"><br><br>
+            
+            <input type="email" name="email" placeholder="Enter Email" required style="width: 95%;"><br><br>
+            
+            <label>Experience Level:</label><br>
+            <select name="exp_level" style="width: 98%;">
+                <option value="Beginner / Intern">Beginner / Intern</option>
+                <option value="Junior Developer">Junior Developer</option>
+                <option value="Mid-Level Developer">Mid-Level Developer</option>
+                <option value="Senior Developer">Senior Developer</option>
+            </select><br><br>
+
+            <label>When to join (Date):</label><br>
+            <input type="date" name="join_date" style="width: 95%;"><br><br>
+
+            <label>Skills (Comma separated):</label><br>
+            <input type="text" name="skills" placeholder="Python, HTML, Flask, CSS" style="width: 95%;"><br><br>
+
+            <label>Short Bio:</label><br>
+            <textarea name="bio" placeholder="Tell us about yourself..." rows="3" style="width: 95%;"></textarea><br><br>
+            
+            <button type="submit" style="width: 100%; padding: 8px;">Submit</button>
+        </form>
+    </fieldset>
+
+    <!-- Profile Display Section -->
+    <center>
+        <h3 style="margin-top: 30px;">myProfile</h3>
+        {% if data %}
+            <hr style="width: 480px;">
+            <div style="text-align: left; width: 480px; margin: 0 auto; border: 1px solid #ccc; padding: 15px; border-radius: 5px;">
+                
+                <!-- Banner Image Display -->
+                {% if data['banner'] %}
+                    <img src="{{ data['banner'] }}" alt="Banner" style="width: 100%; height: 120px; object-fit: cover; border-radius: 4px; background-color: #eee;">
+                {% endif %}
+
+                <div style="margin-top: 10px; display: flex; align-items: center; gap: 15px;">
+                    <!-- Profile Image Display -->
+                    <img src="{{ data['pic'] if data['pic'] else 'https://picsum.photos' }}" alt="dp" width="100" height="100" style="border-radius: 50%; object-fit: cover; border: 2px solid #fff; margin-top: -40px; box-shadow: 0 px 4px rgba(0,0,0,0.2);">
+                    
+                    <div>
+                        <h2 style="margin: 0;">{{ data['uname'] }}</h2>
+                        <small style="color: gray;">{{ data['exp_level'] }}</small>
+                    </div>
+                </div>
+
+                <hr>
+                <p><b>Email:</b> {{ data['email'] }}</p>
+                <p><b>Available to Join:</b> {{ data['join_date'] }}</p>
+                
+                {% if data['profile_url'] %}
+                    <p><b>Website:</b> <a href="{{ data['profile_url'] }}" target="_blank">{{ data['profile_url'] }}</a></p>
+                {% endif %}
+
+                <p><b>Skills:</b> <span style="background: #e1e1e1; padding: 2px 6px; border-radius: 4px;">{{ data['skills'] }}</span></p>
+                
+                <p><b>Bio:</b></p>
+                <p style="font-style: italic; color: #555; background: #f9f9f9; padding: 10px; border-left: 3px solid #007bff;">
+                    {{ data['bio'] }}
+                </p>
+            </div>
+        {% else %}
+            <p style="color: gray;">No profile data submitted yet.</p>
+        {% endif %}
+    </center>
+
+</body>
+</html>
